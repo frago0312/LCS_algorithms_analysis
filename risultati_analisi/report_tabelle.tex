@@ -1,0 +1,291 @@
+
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+
+\geometry{a4paper, margin=1in}
+
+\title{Analisi Sperimentale di Algoritmi per Longest Common Subsequence}
+\author{Francesco}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Test di Correttezza}
+\begin{center}
+\begin{table}[H]
+\caption{Risultati dei test di correttezza}
+\label{tab:correttezza_risultati}
+\begin{tabular}{l|c|c|c|c}
+\toprule
+ & Bottom-up & Forza Bruta & Memoized & Ricorsivo \\
+TestCase &  &  &  &  \\
+\midrule
+\textbf{Classico} & Pass & Pass & Pass & Pass \\
+\textbf{Entrambe le stringhe vuote} & Pass & Pass & Pass & Pass \\
+\textbf{LCS multipli possibili (BCAB, BDAB)} & Pass & Pass & Pass & Pass \\
+\textbf{Nessun carattere comune} & Pass & Pass & Pass & Pass \\
+\textbf{Prima stringa vuota} & Pass & Pass & Pass & Pass \\
+\textbf{Seconda stringa vuota} & Pass & Pass & Pass & Pass \\
+\textbf{Stringhe identiche} & Pass & Pass & Pass & Pass \\
+\textbf{Una stringa è sottosequenza dell'altra} & Pass & Pass & Pass & Pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\section{Test di Performance - Confronto}
+
+\subsection{Algoritmi Esponenziali}
+\begin{center}
+\begin{table}[H]
+\caption{Tempi mediani (s) per confronto algoritmi esponenziali}
+\label{tab:confronto_tempi_esponenziali}
+\begin{tabular}{l|r|r}
+\toprule
+ & Forza Bruta & Ricorsivo \\
+StringLength &  &  \\
+\midrule
+\textbf{0} & 0.000010 & 0.000001 \\
+\textbf{1} & 0.000010 & 0.000002 \\
+\textbf{2} & 0.000019 & 0.000007 \\
+\textbf{3} & 0.000042 & 0.000032 \\
+\textbf{4} & 0.000041 & 0.000112 \\
+\textbf{5} & 0.000091 & 0.000403 \\
+\textbf{6} & 0.000210 & 0.000674 \\
+\textbf{7} & 0.000439 & 0.002111 \\
+\textbf{8} & 0.001000 & 0.008311 \\
+\textbf{9} & 0.002353 & 0.027633 \\
+\textbf{10} & 0.005598 & 0.083658 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[H]
+\caption{Picco di memoria (MB) per confronto algoritmi esponenziali}
+\label{tab:confronto_memoria_esponenziale}
+\begin{tabular}{l|r|r}
+\toprule
+ & Forza Bruta & Ricorsivo \\
+StringLength &  &  \\
+\midrule
+\textbf{0} & 0.000112 & 0.000000 \\
+\textbf{1} & 0.000112 & 0.000000 \\
+\textbf{2} & 0.000112 & 0.000000 \\
+\textbf{3} & 0.000112 & 0.000086 \\
+\textbf{4} & 0.000112 & 0.000174 \\
+\textbf{5} & 0.000112 & 0.000264 \\
+\textbf{6} & 0.000112 & 0.000356 \\
+\textbf{7} & 0.000112 & 0.000450 \\
+\textbf{8} & 0.000113 & 0.000546 \\
+\textbf{9} & 0.000189 & 0.000644 \\
+\textbf{10} & 0.000147 & 0.000873 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\subsection{Algoritmi Polinomiali}
+\begin{center}
+\begin{table}[H]
+\caption{Tempi mediani (s) per confronto algoritmi polinomiali}
+\label{tab:confronto_tempi_polinomiali}
+\begin{tabular}{l|r|r}
+\toprule
+ & Bottom-up & Memoized \\
+StringLength &  &  \\
+\midrule
+\textbf{0} & 0.000005 & 0.000004 \\
+\textbf{50} & 0.002697 & 0.005902 \\
+\textbf{100} & 0.010390 & 0.024283 \\
+\textbf{150} & 0.022932 & 0.092800 \\
+\textbf{200} & 0.040987 & 0.170129 \\
+\textbf{250} & 0.064018 & 0.318048 \\
+\textbf{300} & 0.138947 & 0.590555 \\
+\textbf{350} & 0.242219 & 1.011480 \\
+\textbf{400} & 0.369047 & 1.658945 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[H]
+\caption{Picco di memoria (MB) per confronto algoritmi polinomiali}
+\label{tab:confronto_memoria_polinomiali}
+\begin{tabular}{l|r|r}
+\toprule
+ & Bottom-up & Memoized \\
+StringLength &  &  \\
+\midrule
+\textbf{0} & 0.000120 & 0.000384 \\
+\textbf{50} & 0.021336 & 0.212134 \\
+\textbf{100} & 0.083905 & 0.742638 \\
+\textbf{150} & 0.188039 & 1.844114 \\
+\textbf{200} & 0.332157 & 3.541972 \\
+\textbf{250} & 0.516071 & 6.493654 \\
+\textbf{300} & 0.740079 & 8.111860 \\
+\textbf{350} & 1.004061 & 13.692159 \\
+\textbf{400} & 1.308533 & 16.252176 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\section{Test sull'Impatto dell'Alfabeto}
+
+\subsection{Bottom-up}
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Bottom-up) - Tempo (s)}
+\label{tab:impatto_alfabeto_tempo_bottomup}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{100} & 0.010471 & 0.008510 \\
+\textbf{200} & 0.041131 & 0.033367 \\
+\textbf{300} & 0.137763 & 0.121205 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Bottom-up) - Memoria (MB)}
+\label{tab:impatto_alfabeto_memoria_bottomup}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{100} & 0.083901 & 0.083969 \\
+\textbf{200} & 0.332153 & 0.332285 \\
+\textbf{300} & 0.740081 & 0.740277 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\subsection{Forza Bruta}
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Forza Bruta) - Tempo (s)}
+\label{tab:impatto_alfabeto_tempo_forza_bruta}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{10} & 0.005776 & 0.005702 \\
+\textbf{11} & 0.013431 & 0.013427 \\
+\textbf{12} & 0.030631 & 0.030589 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Forza Bruta) - Memoria (MB)}
+\label{tab:impatto_alfabeto_memoria_forza_bruta}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{10} & 0.000190 & 0.000192 \\
+\textbf{11} & 0.000214 & 0.000218 \\
+\textbf{12} & 0.000216 & 0.000220 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\subsection{Memoized}
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Memoized) - Tempo (s)}
+\label{tab:impatto_alfabeto_tempo_memoized}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{100} & 0.029631 & 0.022525 \\
+\textbf{200} & 0.173354 & 0.126693 \\
+\textbf{300} & 0.594599 & 0.390779 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Memoized) - Memoria (MB)}
+\label{tab:impatto_alfabeto_memoria_memoized}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{100} & 0.854664 & 0.836928 \\
+\textbf{200} & 3.582332 & 3.626008 \\
+\textbf{300} & 8.111841 & 8.371215 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+
+\subsection{Ricorsivo}
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Ricorsivo) - Tempo (s)}
+\label{tab:impatto_alfabeto_tempo_ricorsivo}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{10} & 0.170458 & 0.004481 \\
+\textbf{11} & 0.306246 & 0.020395 \\
+\textbf{12} & 1.049106 & 0.054150 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\begin{center}
+\begin{table}[H]
+\caption{Impatto Alfabeto (Ricorsivo) - Memoria (MB)}
+\label{tab:impatto_alfabeto_memoria_ricorsivo}
+\begin{tabular}{l|r|r}
+\toprule
+ & A-Z (26) & DNA (4) \\
+StringLength &  &  \\
+\midrule
+\textbf{10} & 0.000916 & 0.001051 \\
+\textbf{11} & 0.001104 & 0.001200 \\
+\textbf{12} & 0.001251 & 0.001393 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+
+\end{document}

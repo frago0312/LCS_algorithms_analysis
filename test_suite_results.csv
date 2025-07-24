@@ -1,0 +1,97 @@
+TestScenario,Algorithm,TestCase,StringLength,Status,MedianTime_s,PeakMemory_MB,Alphabet
+Correttezza,Forza Bruta,Classico,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Classico,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Classico,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Classico,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,Una stringa è sottosequenza dell'altra,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Una stringa è sottosequenza dell'altra,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Una stringa è sottosequenza dell'altra,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Una stringa è sottosequenza dell'altra,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,Nessun carattere comune,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Nessun carattere comune,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Nessun carattere comune,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Nessun carattere comune,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,Stringhe identiche,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Stringhe identiche,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Stringhe identiche,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Stringhe identiche,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,Prima stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Prima stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Prima stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Prima stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,Seconda stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Seconda stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Seconda stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Seconda stringa vuota,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,Entrambe le stringhe vuote,N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,Entrambe le stringhe vuote,N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,Entrambe le stringhe vuote,N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,Entrambe le stringhe vuote,N/A,Pass,N/A,N/A,N/A
+Correttezza,Forza Bruta,"LCS multipli possibili (BCAB, BDAB)",N/A,Pass,N/A,N/A,N/A
+Correttezza,Ricorsivo,"LCS multipli possibili (BCAB, BDAB)",N/A,Pass,N/A,N/A,N/A
+Correttezza,Memoized,"LCS multipli possibili (BCAB, BDAB)",N/A,Pass,N/A,N/A,N/A
+Correttezza,Bottom-up,"LCS multipli possibili (BCAB, BDAB)",N/A,Pass,N/A,N/A,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,0,N/A,9.7999582067132e-06,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,1,N/A,9.899958968162537e-06,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,2,N/A,1.9299914129078388e-05,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,3,N/A,4.2199972085654736e-05,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,4,N/A,4.130008164793253e-05,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,5,N/A,9.14999982342124e-05,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,6,N/A,0.00021030008792877197,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,7,N/A,0.0004389999667182565,0.000112,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,8,N/A,0.0010000999318435788,0.000113,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,9,N/A,0.002353199990466237,0.000189,N/A
+Performance Confronto - Esponenziale,Forza Bruta,N/A,10,N/A,0.005597700015641749,0.000147,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,0,N/A,8.00006091594696e-07,0.0,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,1,N/A,2.400018274784088e-06,0.0,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,2,N/A,7.200054824352264e-06,0.0,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,3,N/A,3.190001007169485e-05,8.6e-05,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,4,N/A,0.00011179991997778416,0.000174,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,5,N/A,0.0004032000433653593,0.000264,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,6,N/A,0.0006738000083714724,0.000356,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,7,N/A,0.0021112998947501183,0.00045,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,8,N/A,0.008310900069773197,0.000546,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,9,N/A,0.02763319993391633,0.000644,N/A
+Performance Confronto - Esponenziale,Ricorsivo,N/A,10,N/A,0.08365829999092966,0.000873,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,0,N/A,4.199915565550327e-06,0.000384,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,50,N/A,0.005902000004425645,0.212134,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,100,N/A,0.024282700032927096,0.742638,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,150,N/A,0.09280019998550415,1.844114,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,200,N/A,0.1701294999802485,3.541972,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,250,N/A,0.3180480001028627,6.493654,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,300,N/A,0.590555000002496,8.11186,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,350,N/A,1.0114796999841928,13.692159,N/A
+Performance Confronto - Polinomiale,Memoized,N/A,400,N/A,1.6589453000342473,16.252176,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,0,N/A,4.600035026669502e-06,0.00012,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,50,N/A,0.0026967000449076295,0.021336,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,100,N/A,0.01039029995445162,0.083905,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,150,N/A,0.022931800107471645,0.188039,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,200,N/A,0.04098749998956919,0.332157,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,250,N/A,0.06401780003216118,0.516071,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,300,N/A,0.13894650002475828,0.740079,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,350,N/A,0.24221870000474155,1.004061,N/A
+Performance Confronto - Polinomiale,Bottom-up,N/A,400,N/A,0.36904670007061213,1.308533,N/A
+Impatto Alfabeto,Forza Bruta,N/A,10,N/A,0.005702399997971952,0.000192,DNA (4)
+Impatto Alfabeto,Forza Bruta,N/A,10,N/A,0.005775999976322055,0.00019,A-Z (26)
+Impatto Alfabeto,Forza Bruta,N/A,11,N/A,0.013426700024865568,0.000218,DNA (4)
+Impatto Alfabeto,Forza Bruta,N/A,11,N/A,0.01343059993814677,0.000214,A-Z (26)
+Impatto Alfabeto,Forza Bruta,N/A,12,N/A,0.030588699970394373,0.00022,DNA (4)
+Impatto Alfabeto,Forza Bruta,N/A,12,N/A,0.030631399946287274,0.000216,A-Z (26)
+Impatto Alfabeto,Ricorsivo,N/A,10,N/A,0.004481300013139844,0.001051,DNA (4)
+Impatto Alfabeto,Ricorsivo,N/A,10,N/A,0.1704577999189496,0.000916,A-Z (26)
+Impatto Alfabeto,Ricorsivo,N/A,11,N/A,0.020394899998791516,0.0012,DNA (4)
+Impatto Alfabeto,Ricorsivo,N/A,11,N/A,0.30624569999054074,0.001104,A-Z (26)
+Impatto Alfabeto,Ricorsivo,N/A,12,N/A,0.05414999998174608,0.001393,DNA (4)
+Impatto Alfabeto,Ricorsivo,N/A,12,N/A,1.049106499995105,0.001251,A-Z (26)
+Impatto Alfabeto,Memoized,N/A,100,N/A,0.022525400039739907,0.836928,DNA (4)
+Impatto Alfabeto,Memoized,N/A,100,N/A,0.029630900011397898,0.854664,A-Z (26)
+Impatto Alfabeto,Memoized,N/A,200,N/A,0.12669300008565187,3.626008,DNA (4)
+Impatto Alfabeto,Memoized,N/A,200,N/A,0.17335359996650368,3.582332,A-Z (26)
+Impatto Alfabeto,Memoized,N/A,300,N/A,0.3907787000061944,8.371215,DNA (4)
+Impatto Alfabeto,Memoized,N/A,300,N/A,0.5945992999477312,8.111841,A-Z (26)
+Impatto Alfabeto,Bottom-up,N/A,100,N/A,0.008509699953719974,0.083969,DNA (4)
+Impatto Alfabeto,Bottom-up,N/A,100,N/A,0.010471099987626076,0.083901,A-Z (26)
+Impatto Alfabeto,Bottom-up,N/A,200,N/A,0.03336700005456805,0.332285,DNA (4)
+Impatto Alfabeto,Bottom-up,N/A,200,N/A,0.04113060003146529,0.332153,A-Z (26)
+Impatto Alfabeto,Bottom-up,N/A,300,N/A,0.12120519997552037,0.740277,DNA (4)
+Impatto Alfabeto,Bottom-up,N/A,300,N/A,0.13776250008959323,0.740081,A-Z (26)
