@@ -34,25 +34,39 @@ def generate_random_string(length: int, alphabet: str) -> str:
 def run_single_experiment(algorithm_func, X: str, Y: str):
     """
     Esegue un singolo esperimento per un dato algoritmo. Misura tempo e memoria.
-    Restituisce una tupla contenente (risultato_lcs, tempo_esecuzione_s, picco_memoria_mb).
+    Restituisce una tupla contenente (result_lcs, execution_time_s, peak_memory_mb).
     """
+    # inizia il tracciamento della memoria
     tracemalloc.start()
+
+    # misura il tempo di esecuzione dell'algoritmo
     start_time = time.perf_counter()
     result_lcs = algorithm_func(X, Y)
     end_time = time.perf_counter()
+
+    # ottiene il picco di memoria utilizzato e ferma il tracciamento
     _, peak_mem = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     execution_time_s = end_time - start_time
+
     peak_memory_mb = peak_mem / 10 ** 6
-    return result_lcs, execution_time_s, peak_memory_mb
+    return result_lcs, execution_time_s, peak_memory_mb     # converte da byte a megabyte
 
 
 def _is_subsequence(sub: str, main_str: str) -> bool:
     """
-    Funzione di supporto per verificare se 'sub' è una sottosequenza di 'main'.
+    Funzione di supporto per verificare se 'sub' è una sottosequenza di 'main_str'.
     """
-    it = iter(main_str)
-    return all(c in it for c in sub)
+    i = 0
+    j = 0
+
+    while i < len(sub) and j < len(main_str):
+        if sub[i] == main_str[j]:
+            i += 1  # se i caratteri corrispondono, aumento l'indice di sub
+        j += 1      # in ogni caso aumento quello di main_str
+
+    # se ho trovato tutti i caratteri di sub, l'indice i deve essere pari alla sua lunghezza
+    return i == len(sub)
 
 
 # --- SUITE DI TEST ---
@@ -63,6 +77,7 @@ def run_correctness_tests():
     """
     print("--- Inizio Test di Correttezza ---")
     results = []
+    # lista di casi di test, ciascuno definito con un dizionario
     test_cases = [
         {"X": "AGGTAB", "Y": "GXTXAYB", "expected": "GTAB", "case": "Classico"},
         {"X": "ABCDE", "Y": "ACE", "expected": "ACE", "case": "Una stringa è sottosequenza dell'altra"},
@@ -76,12 +91,16 @@ def run_correctness_tests():
 
     for case_data in test_cases:
         X, Y, case_name = case_data["X"], case_data["Y"], case_data["case"]
+        # se "expected_len" non fosse specificato, lo calcolo a partire da "expected"
         expected_len = case_data.get('expected_len', len(case_data.get('expected', '')))
         print(f"\nCaso di test: {case_name} (X='{X}', Y='{Y}')")
+        # itera su tutti gli algoritmi definiti nel dizionario ALGORITHMS
         for algo_name, algo_func in ALGORITHMS.items():
             try:
                 lcs_result, _, _ = run_single_experiment(algo_func, X, Y)
                 actual_len = len(lcs_result)
+                # per essere corretta deve avere lunghezza corrispondente a quella attesa
+                # e la lcs trovata deve essere sottosequenza di entrambe le stringhe di partenza
                 is_valid_subsequence = _is_subsequence(lcs_result, X) and _is_subsequence(lcs_result, Y)
                 status = "Pass" if actual_len == expected_len and is_valid_subsequence else "Fail"
                 print(
@@ -100,9 +119,14 @@ def run_correctness_tests():
 def run_comparison_performance_tests():
     """
     Esegue test di performance per confrontare gli algoritmi tra loro.
+    Gli scenari sono separati in base alla complessità attesa: esponenziale (Forza Bruta, Ricorsivo)
+    e polinomiale (Memoized, Bottom-up), usando stringhe di dimensioni appropriate per ciascun gruppo.
+    Per ogni combinazione di algoritmo e lunghezza, l'esperimento viene ripetuto più volte (num_repetitions)
+    e i risultati vengono aggregati calcolando la mediana, per ridurre l'impatto di eventuali outlier.
     """
     print("\n--- Inizio Test di Performance di Confronto ---")
     results = []
+    # separo i test in piu scenari a seconda del tipo di algoritmo
     test_configs = [
         {
             "scenario_name": "Performance Confronto - Esponenziale",
@@ -140,8 +164,10 @@ def run_comparison_performance_tests():
 
 def run_alphabet_impact_tests():
     """
-    Analizza se la dimensione dell'alfabeto (es: DNA vs A-Z)
-    influisce sulle performance degli algoritmi.
+    Analizza se la dimensione dell'alfabeto (es: DNA con 4 caratteri vs A-Z con 26)
+    influisce sulle performance degli algoritmi. L'ipotesi è che un alfabeto più piccolo
+    aumenti la probabilità di trovare caratteri comuni, influenzando potenzialmente
+    il tempo e la memoria utilizzati.
     """
     print("\n--- Inizio Test Impatto Alfabeto ---")
     results = []
@@ -174,6 +200,7 @@ def run_alphabet_impact_tests():
 def main():
     """
     Funzione principale che fa partire tutte le suite di test.
+    I risultati vengono salvati su un singolo file csv.
     """
     all_results = (
             run_correctness_tests() +
@@ -185,7 +212,7 @@ def main():
         print("Nessun risultato da salvare")
         return
 
-    # Trovo tutti i possibili campi dai vari risultati
+    # trovo tutti i possibili campi dai vari risultati, assegnando loro una colonna del file
     all_fieldnames = set().union(*(d.keys() for d in all_results))
     preferred_order = [
         "TestScenario", "Algorithm", "TestCase", "StringLength", "Status",

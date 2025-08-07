@@ -3,8 +3,11 @@ import matplotlib.pyplot as plt
 import os
 import re
 
+# file CSV per contenere i dati
 CSV_FILE = 'test_suite_results.csv'
+# cartella dove salvare i grafici e le tabelle
 OUTPUT_DIR = 'risultati_analisi'
+# file per le tabelle latex
 LATEX_TABLES_FILE = 'report_tabelle.tex'
 
 plt.style.use('seaborn-v0_8-whitegrid')
@@ -12,27 +15,31 @@ plt.style.use('seaborn-v0_8-whitegrid')
 COLOR_PALETTE = ['#0072B2', '#D55E00', '#009E73', '#CC79A7']
 MARKER_STYLES = ['o', 's', '^', 'D']
 
-
+# funzione per ripulire un nome di un file da caratteri non validi
 def sanitize_filename(name: str) -> str:
     name = name.replace(' ', '_').replace('(', '').replace(')', '')
     return re.sub(r'[^a-zA-Z0-9_]', '', name).lower()
 
-
+# funzione che genera il codice latex per una tabella pivot e lo scrive sul file
 def generate_latex_table(df: pd.DataFrame, caption: str, label: str, values_col: str, latex_file_handle,
                          index_col: str = 'StringLength',
                          columns_col: str = 'Algorithm'):
     print(f"Generazione tabella LaTeX per: {caption}...")
     try:
+        # crea una tabella pivot per riorganizzare i dati
         pivot_df = df.pivot_table(index=index_col, columns=columns_col, values=values_col)
 
-        pivot_df.columns.name = None
+        pivot_df.columns.name = None    # rimuove il nome all'asse delle colonne
         if pd.api.types.is_numeric_dtype(pivot_df.index):
             pivot_df.index = pivot_df.index.astype(int)
 
+        # formatta i valori numerici
         formatted_pivot = pivot_df.map(lambda x: f'{x:.6f}' if isinstance(x, float) else x)
 
+        #formatta le colonne
         column_format = 'l|' + '|'.join(['r'] * len(formatted_pivot.columns))
 
+        #ottiene una stringa di codice latex a partire dal dataframe
         latex_code = formatted_pivot.to_latex(
             caption=caption,
             label=f'tab:{sanitize_filename(label)}',
@@ -42,6 +49,7 @@ def generate_latex_table(df: pd.DataFrame, caption: str, label: str, values_col:
             position='H'
         )
 
+        # la inserisce nel file
         latex_file_handle.write("\\begin{center}\n")
         latex_file_handle.write(latex_code)
         latex_file_handle.write("\\end{center}\n\n")
@@ -50,12 +58,13 @@ def generate_latex_table(df: pd.DataFrame, caption: str, label: str, values_col:
         print(f"Impossibile generare la tabella pivot per '{caption}'. Errore: {e}")
 
 
+# funzione che genera la tabella di correttezza in latex
 def generate_correctness_latex(df: pd.DataFrame, caption: str, label: str, latex_file_handle):
     print(f"Generazione tabella LaTeX per: {caption}...")
     try:
+        # seleziona e riorganizza i dati per la tabella di correttezza
         display_df = df[['TestCase', 'Algorithm', 'Status']].copy()
         pivot_df = display_df.pivot(index='TestCase', columns='Algorithm', values='Status')
-
         pivot_df.columns.name = None
 
         column_format = 'l|' + '|'.join(['c'] * len(pivot_df.columns))
@@ -77,10 +86,12 @@ def generate_correctness_latex(df: pd.DataFrame, caption: str, label: str, latex
         print(f"Impossibile generare la tabella di correttezza. Errore: {e}")
 
 
+# funzione che crea e salva un grafico a linee per confrontare le performance degli algoritmi
 def plot_performance(df: pd.DataFrame, title: str, y_label: str, filename: str, use_log_scale: bool = False):
     print(f"Generazione grafico: {title}...")
     fig, ax = plt.subplots(figsize=(12, 8))
 
+    # itera su ogni algoritmo per disegnare la curva di performance
     algorithms = sorted(df['Algorithm'].unique())
     for i, algo_name in enumerate(algorithms):
         group = df[df['Algorithm'] == algo_name]
@@ -90,24 +101,28 @@ def plot_performance(df: pd.DataFrame, title: str, y_label: str, filename: str, 
                 label=algo_name,
                 color=COLOR_PALETTE[i % len(COLOR_PALETTE)])
 
+    # applica la scala logaritmica se richiesto (non l'ho usato alla fine)
     final_title = title
     if use_log_scale:
         ax.set_yscale('log')
         final_title += " (Scala Logaritmica)"
 
+    # importazioni estetiche del grafico
     ax.set_title(final_title, fontsize=16, pad=20)
     ax.set_xlabel('Lunghezza delle Stringhe (n)', fontsize=12)
     ax.set_ylabel(y_label, fontsize=12)
     ax.set_xlim(left=0)
-
     ax.legend(title='Algoritmo', fontsize=10)
     ax.grid(True, which="both", ls="--")
+
+    # salva il grafico nella cartella
     output_path = os.path.join(OUTPUT_DIR, filename)
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close(fig)
     print(f"Grafico salvato in: {output_path}")
 
 
+# funzione che crea e salva un grafico a barre per visualizzare l'impatto della dimensione dell'alfabeto
 def plot_alphabet_impact_single_algo(df: pd.DataFrame, algorithm_name: str, y_label: str, filename: str):
     metric_name = "Tempo" if "Time" in y_label else "Memoria"
     title = f"Impatto Alfabeto su {metric_name} ({algorithm_name})"
@@ -128,16 +143,20 @@ def plot_alphabet_impact_single_algo(df: pd.DataFrame, algorithm_name: str, y_la
     print(f"Grafico salvato in: {output_path}")
 
 
+# funzione principale che gestisce l'analisi dei dati: legge il file csv, filtra i dati e chiama le funzioni giuste
+# scrive tutte le tabelle su un file .tex che poi ho importato su overleaf per copiare direttamente il codice latex
 def main():
     if not os.path.exists(CSV_FILE):
         print(f"Errore: File '{CSV_FILE}' non trovato.")
         return
-
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    # carica tutti i risultati del file csv in un dataframe di pandas
     df = pd.read_csv(CSV_FILE)
 
     latex_output_path = os.path.join(OUTPUT_DIR, LATEX_TABLES_FILE)
 
+    #scrivo preambolo e postambolo per il documento latex
     latex_preamble = r"""
 \documentclass[a4paper, 11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -149,7 +168,7 @@ def main():
 \geometry{a4paper, margin=1in}
 
 \title{Analisi Sperimentale di Algoritmi per Longest Common Subsequence}
-\author{Francesco}
+\author{Francesco Gori}
 \date{\today}
 
 \begin{document}
@@ -159,22 +178,27 @@ def main():
 """
     latex_postamble = r"\end{document}"
 
+    # apre il file in modalità scrittura
     with open(latex_output_path, 'w', encoding='utf-8') as latex_file:
         print(f"Le tabelle LaTeX verranno salvate in: {os.path.abspath(latex_output_path)}")
 
+        # scrive il preambolo
         latex_file.write(latex_preamble)
 
+        # sezione dei test di correttezza chiamando la funzione apposita
         latex_file.write("\n\\section{Test di Correttezza}\n")
         correctness_df = df[df['TestScenario'] == 'Correttezza'].copy()
         if not correctness_df.empty:
             generate_correctness_latex(correctness_df, 'Risultati dei test di correttezza', 'correttezza_risultati',
                                        latex_file)
 
+        # sezione dei test di performance, dividendo fra esponenziali e polinomiali
         latex_file.write("\n\\section{Test di Performance - Confronto}\n")
         exp_df = df[df['TestScenario'] == 'Performance Confronto - Esponenziale'].copy()
         poly_df = df[df['TestScenario'] == 'Performance Confronto - Polinomiale'].copy()
 
         if not exp_df.empty:
+            # genera i grafici e le tabelle per gli esponenziali
             latex_file.write("\n\\subsection{Algoritmi Esponenziali}\n")
             plot_performance(exp_df, 'Confronto Performance (Tempo) - Algoritmi Esponenziali', 'MedianTime_s',
                              'plot_confronto_tempo_esponenziale_lineare.png', use_log_scale=False)
@@ -186,6 +210,7 @@ def main():
                                  'confronto_memoria_esponenziale', 'PeakMemory_MB', latex_file)
 
         if not poly_df.empty:
+            # genera i grafici e le tabelle per i polinomiali
             latex_file.write("\n\\subsection{Algoritmi Polinomiali}\n")
             plot_performance(poly_df, 'Confronto Performance (Tempo) - Algoritmi Polinomiali', 'MedianTime_s',
                              'plot_confronto_tempo_polinomiale.png')
@@ -196,9 +221,11 @@ def main():
             generate_latex_table(poly_df, 'Picco di memoria (MB) per confronto algoritmi polinomiali',
                                  'confronto_memoria_polinomiali', 'PeakMemory_MB', latex_file)
 
+        # sezione sull'impatto dell'alfabeto
         latex_file.write("\n\\section{Test sull'Impatto dell'Alfabeto}\n")
         alphabet_df = df[df['TestScenario'] == 'Impatto Alfabeto'].copy()
         if not alphabet_df.empty:
+            # itera su ogni algoritmo e genera grafici e tabelle
             for algo_name in sorted(alphabet_df['Algorithm'].unique()):
                 latex_file.write(f"\n\\subsection{{{algo_name}}}\n")
                 group = alphabet_df[alphabet_df['Algorithm'] == algo_name]
