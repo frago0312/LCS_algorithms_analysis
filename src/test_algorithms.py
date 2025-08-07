@@ -5,7 +5,6 @@ import statistics
 import csv
 import os
 import tracemalloc
-from itertools import product
 
 from lcs_algorithms import (
     lcs_memoized,
